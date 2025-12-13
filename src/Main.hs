@@ -85,10 +85,10 @@ import Gogol.YouTube.Channels.List      as YouTubeChannelsList
 import Gogol.YouTube.PlaylistItems.List as YouTubePlaylistItemsList
 import Gogol.YouTube.Playlists.List     as YouTubePlaylistsList
 import Gogol.YouTube.Subscriptions.List as YouTubeSubscriptionsList
+import System.Environment
 import System.IO
 import System.Process                   (rawSystem)
 import Text.Pretty.Simple
-import System.Environment
 
 -- cache the calls
 
@@ -127,7 +127,7 @@ data ChannelSummaryPenultimate = ChannelSummaryPenultimate {
     cspThumbnailLarge    :: Text
 } deriving stock (Eq, Show)
 
-convergeCSPtoCS :: DateTime -> ChannelSummaryPenultimate -> ChannelSummary
+convergeCSPtoCS ∷ DateTime → ChannelSummaryPenultimate → ChannelSummary
 convergeCSPtoCS lastActivity' csp = ChannelSummary {
     id = cspId csp,
     title = cspTitle csp,
@@ -141,18 +141,18 @@ convergeCSPtoCS lastActivity' csp = ChannelSummary {
     thumbnailLarge = cspThumbnailLarge csp
 }
 
-playlistItemToLastActivityDate :: PlaylistItem -> DateTime
+playlistItemToLastActivityDate ∷ PlaylistItem → DateTime
 playlistItemToLastActivityDate PlaylistItem { contentDetails = Just PlaylistItemContentDetails { videoPublishedAt = Just dt } } = dt
 
-playlistItemListResponseToLastActivityDate :: PlaylistItemListResponse -> DateTime
+playlistItemListResponseToLastActivityDate ∷ PlaylistItemListResponse → DateTime
 playlistItemListResponseToLastActivityDate PlaylistItemListResponse { items = Just items' } = playlistItemToLastActivityDate (head items')
 
-getLastActivity :: Text -> IO DateTime
+getLastActivity ∷ Text → IO DateTime
 getLastActivity id = do
     pure undefined
 
 -- todo parallelise?
-channelSummaryPenultimateToChannelSummary :: ChannelSummaryPenultimate -> IO ChannelSummary
+channelSummaryPenultimateToChannelSummary ∷ ChannelSummaryPenultimate → IO ChannelSummary
 channelSummaryPenultimateToChannelSummary csp = do
     lastActivity' <- getLastActivity (cspUploadsPlaylistId csp)
     pure $ convergeCSPtoCS lastActivity' csp
@@ -234,7 +234,7 @@ newAuthorisedEnv c p = do
 -- and a way to join the results from nothing
 -- and a way to decide if there are more results
 -- like a super-traverse?
-rpt :: (Monad m, Semigroup b) => (a -> Maybe c -> m b) -> (b -> Maybe c) -> a -> m b
+rpt ∷ (Monad m, Semigroup b) ⇒ (a → Maybe c → m b) → (b → Maybe c) → a → m b
 rpt callParam decide initialParam = do
     res <- callParam initialParam Nothing
     case decide res of
@@ -264,7 +264,7 @@ getChannelsInfo env channelIds = do
 
 -- https://developers.google.com/youtube/v3/docs/playlistItems/list
 -- https://github.com/brendanhay/gogol/blob/main/lib/services/gogol-youtube/gen/Gogol/YouTube/PlaylistItems/List.hs
-getPlaylistItemsInfo ::  Env '[Youtube'Readonly] → Text -> IO PlaylistItemListResponse
+getPlaylistItemsInfo ∷  Env '[Youtube'Readonly] → Text → IO PlaylistItemListResponse
 getPlaylistItemsInfo env playlistId = do
     let params = (newYouTubePlaylistItemsList ["contentDetails"]) { -- or snippet . PlaylistItemSnippet.publishedAt
         YouTubePlaylistItemsList.playlistId = Just playlistId,
