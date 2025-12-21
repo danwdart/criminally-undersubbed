@@ -16,3 +16,4 @@
 --   tag: 4c1e9b5c7281266b246a8630c9cd714474189283
 --   subdir: lib/services/gogol-youtube
 packages: *
+allow-newer: base, ghc-bignum, template-haskell

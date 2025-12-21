@@ -20,7 +20,7 @@ extra-source-files: README.md
 common shared-properties
   default-language:   GHC2024
   default-extensions: UnicodeSyntax
-  build-depends:      base >=4.21 && <4.23
+  build-depends:      base ^>=4.22
 
   if !arch(wasm32)
     ghc-options: -threaded -rtsopts -with-rtsopts=-N
@@ -43,7 +43,7 @@ common shared-properties
 ------     UnicodeSyntax
 -- 
 --   build-depends:
---     , base           >=4.21 && <4.23
+--     , base           ^>=4.22
 --     , gogol ^>=0.5
 --     , gogol-youtube ^>=0.5
 --     , lens                 ^>=5.3.3
@@ -67,7 +67,7 @@ executable criminally-undersubbed
   hs-source-dirs: src
   main-is:        Main.hs
   build-depends:
-    , base           >=4.21 && <4.23
+    , base           ^>=4.22
     , gogol          ^>=1
     , gogol-youtube  ^>=1
     , lens           ^>=5.3.3
@@ -108,7 +108,7 @@ executable criminally-undersubbed
 -- 
 --   build-depends:      hspec ^>=2.11.15
 
---   base >=4.21 && <4.23
+--   base ^>=4.22
 -- , criminally-undersubbed ^>=0.2
 -- , hspec-core ^>=2.11.15
 -- , hspec-expectations ^>=0.8.4
