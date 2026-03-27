@@ -112,4 +112,4 @@ executable criminally-undersubbed
 -- , criminally-undersubbed ^>=0.2
 -- , hspec-core ^>=2.11.15
 -- , hspec-expectations ^>=0.8.4
--- , QuickCheck ^>=2.17
+-- , QuickCheck ^>=2.18
